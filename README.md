@@ -21,7 +21,7 @@ uv pip install -e ../modules/LandBOSSE/
 ```bash
 pip install -r requirements.txt
 pip install -e ./modules/floris/
-pip install -e ../modules/LandBOSSE/
+pip install -e ./modules/LandBOSSE/
 ```
 
 
