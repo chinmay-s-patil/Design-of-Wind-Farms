@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.17)  20 MAY 2026 06:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.17)  20 MAY 2026 06:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/home/lavender/Studies/Design of Wind Farms/Assignments/Assignment4/Latex/Assignment 4.tex"
-(/home/lavender/Studies/Design of Wind Farms/Assignments/Assignment4/Latex/Assignment 4.tex
+**"/home/lavender/Studies/Design of Wind Farms/Assignments/Assignment5/LaTeX/Assignment 5.tex"
+(/home/lavender/Studies/Design of Wind Farms/Assignments/Assignment5/LaTeX/Assignment 5.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -361,12 +361,14 @@ Package: titlesec 2023/10/27 v2.16 Sectioning titles
 \titlewidth=\dimen187
 \titlewidthlast=\dimen188
 \titlewidthfirst=\dimen189
-) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 18.
+ (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count307
 \l__pdf_internal_box=\box64
-) (./Assignment 4.aux)
-\openout1 = `"Assignment 4.aux"'.
+) (./Assignment 5.aux)
+\openout1 = `"Assignment 5.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 56.
 LaTeX Font Info:    ... okay on input line 56.
@@ -441,91 +443,77 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 \c@lstlisting=\count314
-Package hyperref Info: Link coloring OFF on input line 56.
- (./Assignment 4.out) (./Assignment 4.out)
+Package hyperref Info: Link coloring ON on input line 56.
+ (./Assignment 5.out) (./Assignment 5.out)
 \@outlinefile=\write3
-\openout3 = `"Assignment 4.out"'.
+\openout3 = `"Assignment 5.out"'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 58.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 80.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 58.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 80.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 63.
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-)
-<wind_rose.png, id=108, 389.7762pt x 339.1872pt>
+<wind_rose.png, id=40, 389.7762pt x 339.1872pt>
 File: wind_rose.png Graphic file (type png)
 <use wind_rose.png>
-Package pdftex.def Info: wind_rose.png  used on input line 71.
-(pdftex.def)             Requested size: 294.42636pt x 256.2271pt.
- [1
+Package pdftex.def Info: wind_rose.png  used on input line 90.
+(pdftex.def)             Requested size: 280.83788pt x 244.40091pt.
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc} <./wind_rose.png>] [2] [3]
-<cost_breakdown_pie.png, id=175, 497.2176pt x 482.7636pt>
-File: cost_breakdown_pie.png Graphic file (type png)
-<use cost_breakdown_pie.png>
-Package pdftex.def Info: cost_breakdown_pie.png  used on input line 216.
-(pdftex.def)             Requested size: 262.7222pt x 255.09738pt.
- [4 <./cost_breakdown_pie.png>] [5]
-<q8_npv_vs_discount_rate_irr.png, id=213, 641.7576pt x 351.714pt>
-File: q8_npv_vs_discount_rate_irr.png Graphic file (type png)
-<use q8_npv_vs_discount_rate_irr.png>
-Package pdftex.def Info: q8_npv_vs_discount_rate_irr.png  used on input line 336.
-(pdftex.def)             Requested size: 371.43698pt x 203.56493pt.
+Overfull \hbox (12.34735pt too wide) in paragraph at lines 111--114
+\T1/cmr/m/n/10.95 The ini-tial lay-out places eight IEA 3.4MW tur-bines in a $\OT1/cmr/m/n/10.95 4 \OMS/cmsy/m/n/10.95 ^^B \OT1/cmr/m/n/10.95 2$ \T1/cmr/m/n/10.95 grid cen-tred within the 2.8km$\OMS/cmsy/m/n/10.95 ^^B$\T1/cmr/m/n/10.95 2.8km
+ []
 
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[6{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 369.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 369.
-
-[7 <./q8_npv_vs_discount_rate_irr.png>]
-<q9_pi_vs_turbines.png, id=246, 415.7934pt x 326.6604pt>
-File: q9_pi_vs_turbines.png Graphic file (type png)
-<use q9_pi_vs_turbines.png>
-Package pdftex.def Info: q9_pi_vs_turbines.png  used on input line 405.
-(pdftex.def)             Requested size: 353.31439pt x 277.57791pt.
-<q9_lcoe_vs_turbines.png, id=247, 428.3202pt x 326.6604pt>
-File: q9_lcoe_vs_turbines.png Graphic file (type png)
-<use q9_lcoe_vs_turbines.png>
-Package pdftex.def Info: q9_lcoe_vs_turbines.png  used on input line 413.
-(pdftex.def)             Requested size: 353.31439pt x 269.45827pt.
+ <./wind_rose.png>]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 145.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+) [2{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+<task3_convergence.png, id=70, 641.7576pt x 278.9622pt>
+File: task3_convergence.png Graphic file (type png)
+<use task3_convergence.png>
+Package pdftex.def Info: task3_convergence.png  used on input line 161.
+(pdftex.def)             Requested size: 452.9679pt x 196.89822pt.
+<task3_convergence_truncated.png, id=71, 641.7576pt x 278.9622pt>
+File: task3_convergence_truncated.png Graphic file (type png)
+<use task3_convergence_truncated.png>
+Package pdftex.def Info: task3_convergence_truncated.png  used on input line 170.
+(pdftex.def)             Requested size: 452.9679pt x 196.89822pt.
+ [3 <./task3_convergence.png> <./task3_convergence_truncated.png>]
+<task3_layout.png, id=81, 557.9244pt x 566.115pt>
+File: task3_layout.png Graphic file (type png)
+<use task3_layout.png>
+Package pdftex.def Info: task3_layout.png  used on input line 186.
+(pdftex.def)             Requested size: 339.72592pt x 344.71632pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[8 <./q9_pi_vs_turbines.png>] [9 <./q9_lcoe_vs_turbines.png>] (./Assignment 4.aux)
+[4 <./task3_layout.png>] [5] (./Assignment 5.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
-Package rerunfilecheck Info: File `"Assignment 4".out' has not changed.
-(rerunfilecheck)             Checksum: 27C75F4F04267AF809F65AA080119EBB;4935.
+Package rerunfilecheck Info: File `"Assignment 5".out' has not changed.
+(rerunfilecheck)             Checksum: 0B3CA32215BA38372A98AC17710D5EBA;1481.
  ) 
 Here is how much of TeX's memory you used:
- 13644 strings out of 474222
- 202647 string characters out of 5748733
- 2122975 words of memory out of 5000000
- 35605 multiletter control sequences out of 15000+600000
- 571397 words of font info for 71 fonts, out of 8000000 for 9000
+ 13259 strings out of 474222
+ 198845 string characters out of 5748733
+ 1933975 words of memory out of 5000000
+ 35321 multiletter control sequences out of 15000+600000
+ 570302 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,473b,1079s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on "Assignment 4.pdf" (9 pages, 617283 bytes).
+ 75i,11n,79p,418b,448s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on "Assignment 5.pdf" (5 pages, 511619 bytes).
 PDF statistics:
- 361 PDF objects out of 1000 (max. 8388607)
- 303 compressed objects within 4 object streams
- 121 named destinations out of 1000 (max. 500000)
- 234 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 160 PDF objects out of 1000 (max. 8388607)
+ 116 compressed objects within 2 object streams
+ 22 named destinations out of 1000 (max. 500000)
+ 93 words of extra memory for PDF output out of 10000 (max. 10000000)
 

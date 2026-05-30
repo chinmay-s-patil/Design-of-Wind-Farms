@@ -8,5 +8,6 @@ dependencies = [
     "floris>=4.6.4",
     "pexpect>=4.9.0",
     "pytest>=9.0.3",
+    "requests>=2.34.2",
     "tqdm>=4.67.3",
 ]

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.18)  13 MAY 2026 07:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.18)  17 MAY 2026 18:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -428,40 +428,6 @@ Package microtype Info: Loading configuration file microtype.cfg.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/microtype.cfg
 File: microtype.cfg 2023/03/13 v3.1a microtype main configuration file (RS)
 ))
-! Undefined control sequence.
-\@tempa ->\tframe 
-                  
-l.46 \lstset{style=mystyle}
-                           
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-! Undefined control sequence.
-\@tempa ->\tframe 
-                  
-l.46 \lstset{style=mystyle}
-                           
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Package keyval Error:  undefined.
-
-See the keyval package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.46 \lstset{style=mystyle}
-                           
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count304
@@ -592,47 +558,50 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
-)
-
-LaTeX Warning: File `wind_rose.png' not found on input line 62.
-
-
-! Package pdftex.def Error: File `wind_rose.png' not found: using draft setting
-.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.62 ...phics[width=0.92\linewidth]{wind_rose.png}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 6
-2.
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-)
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmtt' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
- [1
+) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/
 dvips/cm-super/cm-super-t1.enc}]
-<../Power Cp Ct.png, id=113, 900.4842pt x 324.4923pt>
+Overfull \hbox (30.45865pt too wide) in paragraph at lines 102--103
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][]
+ []
+
+
+Overfull \hbox (30.45865pt too wide) in paragraph at lines 103--104
+[][][][][][][][][][][][][][][][][][][][][][][]
+ []
+
+
+Overfull \hbox (30.45865pt too wide) in paragraph at lines 104--105
+[][][][][][][][][][][][][][][][][][][][][][][]
+ []
+
+
+Overfull \hbox (30.45865pt too wide) in paragraph at lines 105--106
+[][][][][][][][][][][][][][][][][][][][][][][]
+ []
+
+
+Overfull \hbox (30.45865pt too wide) in paragraph at lines 106--107
+[][][][][][][][][][][][][][][][][][][][][][][]
+ []
+
+
+Overfull \hbox (30.45865pt too wide) in paragraph at lines 107--108
+[][][][][][][][][][][][][][][][][][][][][][][]
+ []
+
+<../Power Cp Ct.png, id=119, 900.4842pt x 324.4923pt>
 File: ../Power Cp Ct.png Graphic file (type png)
 <use ../Power Cp Ct.png>
-Package pdftex.def Info: ../Power Cp Ct.png  used on input line 94.
+Package pdftex.def Info: ../Power Cp Ct.png  used on input line 112.
 (pdftex.def)             Requested size: 416.72963pt x 150.1694pt.
-<../Yaw Error.png, id=115, 620.7993pt x 339.669pt>
+<../Yaw Error.png, id=121, 620.7993pt x 339.669pt>
 File: ../Yaw Error.png Graphic file (type png)
 <use ../Yaw Error.png>
-Package pdftex.def Info: ../Yaw Error.png  used on input line 101.
+Package pdftex.def Info: ../Yaw Error.png  used on input line 119.
 (pdftex.def)             Requested size: 416.72963pt x 228.0176pt.
-
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -642,7 +611,7 @@ png>]
 File: ../Horizontal Streamvise CrossPlane 0Deg.png Graphic file (type png)
 <use ../Horizontal Streamvise CrossPlane 0Deg.png>
 Package pdftex.def Info: ../Horizontal Streamvise CrossPlane 0Deg.png  used on 
-input line 122.
+input line 140.
 (pdftex.def)             Requested size: 362.37569pt x 482.85794pt.
 
 
@@ -653,28 +622,53 @@ t>
 File: ../Horizontal Streamvise CrossPlane 270Deg.png Graphic file (type png)
 <use ../Horizontal Streamvise CrossPlane 270Deg.png>
 Package pdftex.def Info: ../Horizontal Streamvise CrossPlane 270Deg.png  used o
-n input line 129.
+n input line 147.
 (pdftex.def)             Requested size: 362.37569pt x 397.67227pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [3 <../Yaw Error.png>] [4 <../Horizontal Streamvise CrossPlane 0Deg.png>]
-[5 <../Horizontal Streamvise CrossPlane 270Deg.png>] [6]
+[5 <../Horizontal Streamvise CrossPlane 270Deg.png>]
+Overfull \hbox (82.72098pt too wide) in paragraph at lines 189--190
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (82.72098pt too wide) in paragraph at lines 199--200
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[6]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 198.
+(hyperref)                removing `math shift' on input line 216.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 198.
+(hyperref)                removing `superscript' on input line 216.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\circ' on input line 198.
+(hyperref)                removing `\circ' on input line 216.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 198.
+(hyperref)                removing `math shift' on input line 216.
+
+
+Overfull \hbox (56.58981pt too wide) in paragraph at lines 218--219
+[][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (56.58981pt too wide) in paragraph at lines 226--227
+[][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (4.32748pt too wide) in paragraph at lines 236--237
+[][][][][][][][][][][][][][][][][][][] 
+ []
 
 [7] [8] (./Assignment3.aux)
  ***********
@@ -682,16 +676,16 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `Assignment3.out' has not changed.
-(rerunfilecheck)             Checksum: 265717718066229D53C2614296B23E8D;4687.
+(rerunfilecheck)             Checksum: 250C59D34D406EA5539267D464F157C6;4783.
  ) 
 Here is how much of TeX's memory you used:
- 15516 strings out of 476182
- 236438 string characters out of 5795595
- 2190975 words of memory out of 5000000
- 37150 multiletter control sequences out of 15000+600000
- 572500 words of font info for 112 fonts, out of 8000000 for 9000
+ 15450 strings out of 476182
+ 234860 string characters out of 5795595
+ 1967975 words of memory out of 5000000
+ 37095 multiletter control sequences out of 15000+600000
+ 571936 words of font info for 111 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,11n,79p,1008b,1067s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,1008b,1021s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
@@ -701,12 +695,11 @@ onts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/public/cm
 -super/sfbx1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb>
 </usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fo
 nts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-
-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb><
-/usr/share/texmf/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on Assignment3.pdf (8 pages, 429905 bytes).
+super/sfrm1200.pfb>
+Output written on Assignment3.pdf (8 pages, 372915 bytes).
 PDF statistics:
- 303 PDF objects out of 1000 (max. 8388607)
- 255 compressed objects within 3 object streams
- 96 named destinations out of 1000 (max. 500000)
- 23765 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 287 PDF objects out of 1000 (max. 8388607)
+ 243 compressed objects within 3 object streams
+ 88 named destinations out of 1000 (max. 500000)
+ 22749 words of extra memory for PDF output out of 24883 (max. 10000000)
 
