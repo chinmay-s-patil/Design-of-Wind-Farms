@@ -10,3 +10,5 @@ wheels/
 .venv
 
 /cupy-try/cupy-env/*
+
+modules/makeFLorisCuPy.py
