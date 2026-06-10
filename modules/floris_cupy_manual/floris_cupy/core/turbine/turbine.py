@@ -221,7 +221,7 @@ def power(
 
             p += (
                 power_functions[turb_type](**power_model_kwargs)
-                * (turbine_type_map == turb_type)
+                * np.asarray(turbine_type_map == turb_type)
             )
         else: # Multidimensional
             md_conditions, md_conditions_map = _select_multidim_condition(
@@ -240,9 +240,10 @@ def power(
 
                 p += (
                     power_functions[turb_type](**power_model_kwargs)
-                    * (turbine_type_map == turb_type)
+                    * np.asarray(turbine_type_map == turb_type)
                     * (md_conditions_map[:, None] == i)
                 )
+                
 
     return p
 
@@ -630,7 +631,7 @@ class Turbine(BaseClass):
     def _initialize_tilt_interpolation(self) -> None:
         # TODO:
         # Remove any duplicate wind speed entries
-        # _, duplicate_filter = np.unique(self.wind_speeds, return_index=True)
+        # _, duplicate_filter = np_cpu.unique(self.wind_speeds, return_index=True)
         # self.tilt = self.tilt[duplicate_filter]
         # self.wind_speeds = self.wind_speeds[duplicate_filter]
 
