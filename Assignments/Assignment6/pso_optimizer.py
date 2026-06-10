@@ -12,7 +12,8 @@ class BatchedGPUParticleSwarm:
         c1: float = 1.5,
         c2: float = 1.5,
         seed: int = 42,
-        disp: bool = False
+        disp: bool = False,
+        turbine_type_name: str = ""
     ):
         self.n_particles = n_particles
         self.n_turbines = n_turbines
@@ -23,10 +24,12 @@ class BatchedGPUParticleSwarm:
         self.c2 = c2
         self.rng = cp.random.default_rng(seed)
         self.disp = disp
+        self.turbine_type_name = turbine_type_name
         
         self.best_global_pos = None
         self.best_global_score = cp.inf
         self.best_global_aep = 0.0
+        self.best_global_penalty = cp.inf
         
         self.lower_bound = cp.array(self.bounds[:, 0]).reshape(1, n_turbines, 2)
         self.upper_bound = cp.array(self.bounds[:, 1]).reshape(1, n_turbines, 2)
@@ -40,12 +43,17 @@ class BatchedGPUParticleSwarm:
         )
         vel = cp.zeros_like(pos)
         
+        start_pos_cp = pos[0].flatten()
+        start_pos_cpu = start_pos_cp.get() if hasattr(start_pos_cp, 'get') else start_pos_cp
+        
         best_personal_pos = pos.copy()
         best_personal_score = cp.full(self.n_particles, cp.inf)
         
+        history = []
+        
         for it in range(self.maxiter):
             # Evaluate objective function for the entire swarm
-            scores, aeps = batched_objective_fn(pos)
+            scores, aeps, penalties = batched_objective_fn(pos)
             
             # Update personal bests
             improved_mask = scores < best_personal_score
@@ -58,12 +66,13 @@ class BatchedGPUParticleSwarm:
                 self.best_global_score = float(scores[min_score_idx])
                 self.best_global_pos = pos[min_score_idx].copy()
                 self.best_global_aep = float(aeps[min_score_idx])
+                self.best_global_penalty = float(penalties[min_score_idx])
                 
             if callback is not None:
                 # Pass the CPU version of the best position
                 flat_pos = self.best_global_pos.flatten()
                 cpu_pos = flat_pos.get() if hasattr(flat_pos, 'get') else flat_pos
-                callback(cpu_pos, self.best_global_score, self.best_global_aep, it)
+                callback(cpu_pos, self.best_global_score, self.best_global_aep, self.best_global_penalty, it)
                 
             # Update velocities and positions
             r1 = self.rng.uniform(0, 1, size=(self.n_particles, self.n_turbines, 2))
@@ -86,8 +95,21 @@ class BatchedGPUParticleSwarm:
             
             vel = cp.where(out_lower | out_upper, -0.5 * vel, vel)
             
+            history.append({
+                "iter": it,
+                "score": float(self.best_global_score),
+                "aep": float(self.best_global_aep),
+                "penalty": float(self.best_global_penalty)
+            })
+            
             if self.disp:
-                print(f"For {self.n_turbines} turbines:  PSO Iter {it+1:02d}/{self.maxiter} | Best Score: {self.best_global_score:>10.1f} | True AEP: {self.best_global_aep:.3f} GWh")
+                name_str = f"({self.turbine_type_name}):" if self.turbine_type_name else ":"
+                print(f"For {self.n_turbines} turbines {name_str:<21} PSO Iter {it+1:03d}/{self.maxiter} | Best Score: {self.best_global_score:>10.1f} | True AEP: {self.best_global_aep:.3f} GWh | Penalty: {self.best_global_penalty:.6f}")
+                
+            if self.best_global_penalty <= 1e-4:
+                if self.disp:
+                    print(f"Early stopping triggered for {self.n_turbines} turbines{name_str}: penalty ({self.best_global_penalty:.6f}) <= 1e-4")
+                break
                 
         flat_best_pos = self.best_global_pos.flatten()
-        return flat_best_pos.get() if hasattr(flat_best_pos, 'get') else flat_best_pos, self.best_global_score
+        return flat_best_pos.get() if hasattr(flat_best_pos, 'get') else flat_best_pos, start_pos_cpu, self.best_global_score, history

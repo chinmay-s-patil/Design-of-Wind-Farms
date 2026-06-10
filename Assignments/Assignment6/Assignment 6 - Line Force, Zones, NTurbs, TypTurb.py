@@ -30,7 +30,7 @@ import floris_cupy as _floris_pkg
 _FLORIS_DEFAULT_YAML = str(
     pathlib.Path(_floris_pkg.__file__).parent / 'default_inputs.yaml'
 )
-print('FLORIS', _floris_pkg.__version__, '-- default yaml found:', _FLORIS_DEFAULT_YAML)
+# print('FLORIS', _floris_pkg.__version__, '-- default yaml found:', _FLORIS_DEFAULT_YAML)
 import numpy as np
 from scipy.optimize import differential_evolution
 
@@ -54,10 +54,10 @@ os.chdir(r"/home/lavender/Studies/Design of Wind Farms/Assignments/Assignment6")
 
 # ## Optimization Variables
 
-MAX_ITER = 5
+MAX_ITER = 250
 N_PARTICLES = 50
 MAX_WORKERS = 5
-N_MIN, N_MAX = 15, 15
+N_MIN, N_MAX = 13, 17
 SAVE_PLOTS = True
 
 LINE_PENALTY_WEIGHT          = 1e9
@@ -69,7 +69,8 @@ AEP_WEIGHT                   = 1e4
 # ## Turbine Properties
 
 tub_lib = r"./turbineData/"
-turbines = ["IEA_3_4MW", "BAR_BAU_ IEA_3.3MW", "BAR_BAU_LSP_3.25MW"]
+turbines = ["IEA_3_4MW", "BAR_BAU_IEA_3.3MW", "BAR_BAU_LSP_3.25MW"]
+# turbines = ["IEA_3_4MW"]
 
 import yaml
 import os
@@ -842,8 +843,8 @@ wind_rose = WindRose(
     ti_table=SITE1_TI,
     freq_table=freq_table,
 )
-print(f'WindRose: {len(WD_BINS)} dirs x {len(WS_BINS)} speeds')
-print(f'Frequency sum: {freq_table.sum():.6f}  (should be 1.0)')
+# print(f'WindRose: {len(WD_BINS)} dirs x {len(WS_BINS)} speeds')
+# print(f'Frequency sum: {freq_table.sum():.6f}  (should be 1.0)')
 
 
 # ### Show WindRose
@@ -871,7 +872,7 @@ for line in lines:
         p2 = (fb[line[i+1]][1], fb[line[i+1]][0])  # (lon, lat) = (x, y)
         LINE_SEGMENTS.append([p1, p2])
 
-print(len(LINE_SEGMENTS))
+# print(len(LINE_SEGMENTS))
 
 # [print(i) for i in LINE_SEGMENTS]
 
@@ -1202,7 +1203,7 @@ def save_layout_plot(positions, n_turbines, filename, title=""):
     plt.savefig(filename, dpi=300, bbox_inches='tight')
     plt.close(fig)
 
-def run_optimization(n_turbines, seed=42, maxiter=50, disp=True):
+def run_optimization(n_turbines, seed=42, maxiter=50, disp=True, turbine_type_name=""):
     # pyrefly: ignore [missing-import]
     from pso_optimizer import BatchedGPUParticleSwarm
     
@@ -1229,26 +1230,75 @@ def run_optimization(n_turbines, seed=42, maxiter=50, disp=True):
         bounds=bounds,
         maxiter=maxiter,
         seed=seed,
-        disp=disp
+        disp=disp,
+        turbine_type_name=turbine_type_name
     )
     
     objective_fn = _make_objective(n_turbines, fmodel_local)
     
     if SAVE_PLOTS:
         # Ensure directory exists for plots
-        out_dir = os.path.join("plots", f"best_{n_turbines}")
+        out_dir = os.path.join("plots", turbine_type_name, str(n_turbines))
         os.makedirs(out_dir, exist_ok=True)
         
-        def on_new_best(flat_pos, score, aep, it):
+        hist_logs_dir = "history_logs"
+        hist_plots_dir = "history_plots"
+        os.makedirs(hist_logs_dir, exist_ok=True)
+        os.makedirs(hist_plots_dir, exist_ok=True)
+        
+        pen_file = os.path.join(hist_logs_dir, f"{turbine_type_name}_{n_turbines}_penalty_hist.txt")
+        aep_file = os.path.join(hist_logs_dir, f"{turbine_type_name}_{n_turbines}_AEP_hist.txt")
+        hist_plot_file = os.path.join(hist_plots_dir, f"history_{turbine_type_name}_{n_turbines}.png")
+        
+        # Clear existing logs for fresh run
+        with open(pen_file, "w") as f: pass
+        with open(aep_file, "w") as f: pass
+        
+        local_iters = []
+        local_pens = []
+        local_aeps = []
+        
+        def on_new_best(flat_pos, score, aep, penalty, it):
             pos_list = [(flat_pos[2 * i], flat_pos[2 * i + 1]) for i in range(n_turbines)]
             title = f"Iteration {it} | Score: {score:.1f} | AEP: {aep:.3f} GWh"
             filename = os.path.join(out_dir, f"best_case_{it}.png")
             save_layout_plot(pos_list, n_turbines, filename, title)
+            
+            with open(pen_file, "a") as f:
+                f.write(f"{penalty}\n")
+            with open(aep_file, "a") as f:
+                f.write(f"{aep}\n")
+                
+            local_iters.append(it)
+            local_pens.append(penalty)
+            # Ensure aep is consistently in GWh for the plot
+            aep_gwh = aep / 1e9 if aep > 1e6 else aep
+            local_aeps.append(aep_gwh)
+            
+            fig, ax1 = plt.subplots(figsize=(10, 6))
+            ax1.set_xlabel('Iteration')
+            ax1.set_ylabel('Penalty', color='tab:red')
+            ax1.set_yscale('log')
+            ax1.plot(local_iters, local_pens, color='tab:red', marker='o', label='Penalty')
+            ax1.axhline(1e-4, color='tab:red', linestyle='--', alpha=0.5, label='Threshold (1e-4)')
+            ax1.tick_params(axis='y', labelcolor='tab:red')
+            
+            ax2 = ax1.twinx()
+            ax2.set_ylabel('AEP (GWh)', color='tab:blue')
+            ax2.plot(local_iters, local_aeps, color='tab:blue', marker='x', label='AEP')
+            ax2.tick_params(axis='y', labelcolor='tab:blue')
+            
+            plt.title(f"Live Optimization History: {n_turbines} Turbines ({turbine_type_name})")
+            fig.tight_layout()
+            plt.savefig(hist_plot_file)
+            plt.close(fig)
     else:
         on_new_best = None
     
     print(f"Starting PSO for n={n_turbines}...")
-    flat_best_pos, start_pos_cpu, best_score = pso.optimize(objective_fn, callback=on_new_best)
+    start_pso_t = time.time()
+    flat_best_pos, start_pos_cpu, best_score, history = pso.optimize(objective_fn, callback=on_new_best)
+    pso_time = time.time() - start_pso_t
     
     best_positions = [(flat_best_pos[2 * i], flat_best_pos[2 * i + 1]) for i in range(n_turbines)]
     start_positions = [(start_pos_cpu[2 * i], start_pos_cpu[2 * i + 1]) for i in range(n_turbines)]
@@ -1260,7 +1310,7 @@ def run_optimization(n_turbines, seed=42, maxiter=50, disp=True):
     fmodel_local.run()
     exact_aep = fmodel_local.get_farm_AEP()
     
-    return flat_best_pos, start_positions, best_positions, exact_aep
+    return flat_best_pos, start_positions, best_positions, exact_aep, history, pso_time
 
 
 # ### Actual Running
@@ -1271,16 +1321,43 @@ def run_optimization(n_turbines, seed=42, maxiter=50, disp=True):
 
 
 
-def _run_one(n):
-    start_t = time.time()
-    flat_best_pos, x0, pos, exact_aep = run_optimization(n_turbines=n, maxiter=MAX_ITER)
+def _run_one(args):
+    n, t_idx = args
+    
+    global HH, ROTOR_DIAMETER_KM, MIN_TURBINE_SPACING, EXCLUSION_ZONES
+    global ROAD_EXCL_NORMAL_KM, ROAD_EXCL_TOFT_KM, turbine_yaml_path
+    
+    turbine_yaml_path = os.path.join(tub_lib, turbines[t_idx] + ".yaml")
+    with open(turbine_yaml_path, 'r') as f:
+        turb_data = yaml.safe_load(f)
+
+    HH = turb_data['hub_height']
+    ROTOR_DIAMETER_KM = turb_data['rotor_diameter'] / 1000.0
+    MIN_TURBINE_SPACING = 2 * ROTOR_DIAMETER_KM
+    
+    ROTOR_RADIUS_KM = ROTOR_DIAMETER_KM / 2.0
+    
+    EXCLUSION_ZONES = []
+    BUILD_RADIUS = HH * 4 / 1000
+    for lat, lon in builds:
+        EXCLUSION_ZONES.append((lon, lat, BUILD_RADIUS))
+    TOWN_RADIUS = 1.0
+    EXCLUSION_ZONES.append((lon_k_town, lat_k_town, TOWN_RADIUS))
+    WT_RADIUS = HH * 4 / 1000
+    for lat, lon in wts:
+        EXCLUSION_ZONES.append((lon, lat, WT_RADIUS))
+        
+    ROAD_EXCL_NORMAL_KM = ROTOR_RADIUS_KM + 0.010
+    ROAD_EXCL_TOFT_KM   = ROTOR_RADIUS_KM + 0.015
+
+    flat_best_pos, x0, pos, exact_aep, history, pso_time = run_optimization(n_turbines=n, maxiter=MAX_ITER, turbine_type_name=turbines[t_idx])
     line_pen  = line_penalty(pos)
     bound_pen = boundary_penalty(pos)
     excl_pen  = exclusion_penalty(pos)
     inter_pen = interturbine_penalty(pos)
     total_pen = line_pen + bound_pen + excl_pen + inter_pen
-    elapsed = time.time() - start_t
-    return {"n": n, "x0": x0, "positions": pos, "aep": float(exact_aep), "total_pen": total_pen, "time": elapsed}
+    
+    return {"n": n, "t_idx": t_idx, "x0": x0, "positions": pos, "aep": float(exact_aep), "total_pen": total_pen, "time": pso_time, "history": history}
 
 if __name__ == '__main__':
     import multiprocessing as mp
@@ -1300,14 +1377,26 @@ if __name__ == '__main__':
     print("Running MULTIPROCESS parallel sweep with Spawn...")
     all_results = {}
     
+    # Initialize output directories and trackers
+    import json
+    os.makedirs("history_plots", exist_ok=True)
+    os.makedirs("history_logs", exist_ok=True)
+    os.makedirs("optimizedLayout", exist_ok=True)
+    times_dict = {}
+    
     start_time = time.time()
     
     # Use ProcessPoolExecutor for true parallel python processes
     with ProcessPoolExecutor(max_workers=MAX_WORKERS) as ex:
-        futures = {ex.submit(_run_one, n): n for n in range(N_MIN, N_MAX + 1)}
+        futures = {}
+        for n in range(N_MIN, N_MAX + 1):
+            for t_idx in range(len(turbines)):
+                futures[ex.submit(_run_one, (n, t_idx))] = (n, t_idx)
+                
         for fut in as_completed(futures):
             r = fut.result()
-            all_results[r["n"]] = r
+            key = f"{r['n']}_{r['t_idx']}"
+            all_results[key] = r
             
             t = r['time']
             hrs = int(t // 3600)
@@ -1315,8 +1404,61 @@ if __name__ == '__main__':
             secs = t % 60
             time_str = f"{hrs} hr {mins} min {secs:.2f} secs" if hrs > 0 else f"{mins} min {secs:.2f} secs"
             
-            print(f"  n={r['n']} | AEP={r['aep']/1e9:.3f} GWh | penalty={r['total_pen']:.6f}")
-            print(f"  Time taken for optimization of Turbine {r['n']} is {time_str}\n")
+            print(f"  n={r['n']} | type={turbines[r['t_idx']]} | AEP={r['aep']/1e9:.3f} GWh | penalty={r['total_pen']:.6f}")
+            print(f"  Time taken for optimization of Turbine {r['n']} (type {r['t_idx']}) is {time_str}\n")
+            
+            t_name = turbines[r["t_idx"]]
+            n_curr = r["n"]
+            
+            # Save optimized layout text file dynamically
+            with open(f"optimizedLayout/{t_name}_{n_curr}_layout.txt", "w") as f:
+                f.write(f"=== Best layout: {n_curr} turbines, type {t_name} ===\n")
+                f.write(f"Optimization Time: {time_str}\n")
+                f.write(f"AEP       : {r['aep']/1e9:.3f} GWh/yr\n")
+                f.write(f"Penalty   : {r['total_pen']:.6f}\n")
+                for i, (x, y) in enumerate(r["positions"]):
+                    f.write(f"  Turbine {i}: x={x:.4f} km, y={y:.4f} km\n")
+                f.write("\n=== Start position (random seed) ===\n")
+                for i, (x, y) in enumerate(r["x0"]):
+                    f.write(f"  Turbine {i}: x={x:.4f} km, y={y:.4f} km\n")
+                    
+            # Save history plot dynamically
+            hist = r["history"]
+            iters = [h["iter"] for h in hist]
+            pens = [h["penalty"] for h in hist]
+            aeps = [h["aep"]/1e9 for h in hist]
+            
+            fig, ax1 = plt.subplots(figsize=(10, 6))
+            ax1.set_xlabel('Iteration')
+            ax1.set_ylabel('Penalty', color='tab:red')
+            ax1.set_yscale('log')
+            ax1.plot(iters, pens, color='tab:red', label='Penalty')
+            ax1.axhline(1e-4, color='tab:red', linestyle='--', alpha=0.5, label='Threshold (1e-4)')
+            ax1.tick_params(axis='y', labelcolor='tab:red')
+            
+            ax2 = ax1.twinx()
+            ax2.set_ylabel('AEP (GWh)', color='tab:blue')
+            ax2.plot(iters, aeps, color='tab:blue', label='AEP')
+            ax2.tick_params(axis='y', labelcolor='tab:blue')
+            
+            plt.title(f"Optimization History: {n_curr} Turbines ({t_name})")
+            fig.tight_layout()
+            plt.savefig(f"history_plots/history_{t_name}_{n_curr}.png")
+            plt.close(fig)
+            
+            # Save raw history data to text files
+            with open(f"history_logs/{t_name}_{n_curr}_penalty_hist.txt", "w") as f:
+                f.write("\n".join(str(p) for p in pens))
+                
+            with open(f"history_logs/{t_name}_{n_curr}_AEP_hist.txt", "w") as f:
+                f.write("\n".join(str(a) for a in aeps))
+            
+            # Save times dynamically
+            if t_name not in times_dict:
+                times_dict[t_name] = {}
+            times_dict[t_name][n_curr] = r["time"]
+            with open("times_taken.json", "w") as f:
+                json.dump(times_dict, f, indent=4)
             
     total_time = time.time() - start_time
     print(f"--- Optimization complete in {total_time:.2f} seconds ({(total_time/60):.2f} minutes) ---")
@@ -1324,7 +1466,7 @@ if __name__ == '__main__':
 
     PEN_THRESHOLD = 1e-3   # relaxed — tighten once optimizer is converging well
 
-    satisfying = {n: r for n, r in all_results.items() if r["total_pen"] < PEN_THRESHOLD}
+    satisfying = {k: r for k, r in all_results.items() if r["total_pen"] < PEN_THRESHOLD}
     candidates = satisfying if satisfying else all_results   # fallback: take best anyway
 
     best_overall = max(candidates.values(), key=lambda r: r["aep"])
@@ -1332,7 +1474,7 @@ if __name__ == '__main__':
     if not satisfying:
         print(f"\nWARNING: No run met penalty < {PEN_THRESHOLD}. Showing best available.")
 
-    print(f"\n=== Best layout: {best_overall['n']} turbines ===")
+    print(f"\n=== Best layout: {best_overall['n']} turbines, type {turbines[best_overall['t_idx']]} ===")
     print(f"AEP       : {best_overall['aep']/1e9:.3f} GWh/yr")
     print(f"Penalty   : {best_overall['total_pen']:.6f}")
     for i, (x, y) in enumerate(best_overall["positions"]):
@@ -1344,13 +1486,7 @@ if __name__ == '__main__':
     x0_start   = best_overall["x0"]
     aep        = best_overall["aep"]
 
-
-
-
     best_overall
-
-
-
 
     print("\n=== Start position (random seed) ===")
     for i, (x, y) in enumerate(x0_start):
@@ -1362,8 +1498,9 @@ if __name__ == '__main__':
     
     # Save the coordinates to a file
     N_TURBINES = best_overall["n"]
-    with open(f"optimized_layout_n{N_TURBINES}.txt", "w") as f:
-        f.write(f"=== Best layout: {N_TURBINES} turbines ===\n")
+    BEST_T_IDX = best_overall["t_idx"]
+    with open(f"optimized_layout_n{N_TURBINES}_t{BEST_T_IDX}.txt", "w") as f:
+        f.write(f"=== Best layout: {N_TURBINES} turbines, type {turbines[BEST_T_IDX]} ===\n")
         f.write(f"AEP       : {best_overall['aep']/1e9:.3f} GWh/yr\n")
         f.write(f"Penalty   : {best_overall['total_pen']:.6f}\n")
         for i, (x, y) in enumerate(best_overall["positions"]):
@@ -1373,6 +1510,14 @@ if __name__ == '__main__':
             f.write(f"  Turbine {i}: x={x:.4f} km, y={y:.4f} km\n")
             
     print(f"\nBest AEP: {best_overall['aep'] / 1e9:.2f} GWh/yr")
+    
+    # We also need to restore the global state so plotting uses the correct turbine bounds
+    turbine_yaml_path = os.path.join(tub_lib, turbines[BEST_T_IDX] + ".yaml")
+    with open(turbine_yaml_path, 'r') as f:
+        turb_data = yaml.safe_load(f)
+    HH = turb_data['hub_height']
+    ROTOR_DIAMETER_KM = turb_data['rotor_diameter'] / 1000.0
+    MIN_TURBINE_SPACING = 2 * ROTOR_DIAMETER_KM
 
     fig, ax = plt.subplots(figsize=(20,12))
 
@@ -1427,9 +1572,9 @@ if __name__ == '__main__':
     ax.set_xlim(-0.5, 4.5)
     ax.set_ylim(-0.5, 2.5)
     ax.legend(loc='upper left', bbox_to_anchor=(1.0, 1.0))
-    plt.tight_layout()
-    plt.savefig(f"optimized_layout_n{N_TURBINES}.png", dpi=300, bbox_inches='tight')
-    plt.close()
-    print(f"Saved layout plot to optimized_layout_n{N_TURBINES}.png")
+    title = f"Best Layout: {N_TURBINES} Turbines ({turbines[BEST_T_IDX]}) | AEP: {best_overall['aep']/1e9:.2f} GWh"
+    ax.set_title(title, fontsize=16)
 
-
+    plt.savefig(f"optimized_layout_n{N_TURBINES}_t{BEST_T_IDX}.png", dpi=300, bbox_inches='tight')
+    plt.close(fig)
+    print(f"Saved layout plot to optimized_layout_n{N_TURBINES}_t{BEST_T_IDX}.png")

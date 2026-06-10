@@ -4,6 +4,7 @@ import os
 import glob
 import argparse
 import re
+from tqdm import tqdm
 
 def natural_sort_key(s):
     """Sort strings with numbers naturally (e.g., file_2.png comes before file_10.png)"""
@@ -38,7 +39,7 @@ def create_video(image_folder, output_video, fps=2):
     print(f"Found {len(images)} images.")
     print(f"Generating video '{output_video}' at {fps} FPS...")
     
-    for image_path in images:
+    for image_path in tqdm(images, desc="Generating video", colour="green"):
         frame = cv2.imread(image_path)
         if frame is not None:
             video.write(frame)
