@@ -95,7 +95,7 @@ farm:
   # a string beginning with !include for a path to the user's turbine; or a full
   # definition of a wind turbine (as a nested dictionary).
   turbine_type:
-  - iea_3_4MW
+  - IEA_3_4MW
 
 ###
 # Group for defining the atmospheric conditions.
