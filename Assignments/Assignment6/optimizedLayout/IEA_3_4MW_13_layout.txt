@@ -1,0 +1,32 @@
+=== Best layout: 13 turbines, type IEA_3_4MW ===
+Optimization Time: 24 min 44.87 secs
+AEP       : 60.035 GWh/yr
+Penalty   : 0.000000
+  Turbine 0: x=1.1103 km, y=1.8206 km
+  Turbine 1: x=1.4830 km, y=0.4641 km
+  Turbine 2: x=0.4359 km, y=0.5551 km
+  Turbine 3: x=2.9634 km, y=1.0887 km
+  Turbine 4: x=3.0160 km, y=1.3442 km
+  Turbine 5: x=2.5679 km, y=1.2471 km
+  Turbine 6: x=1.7537 km, y=1.7932 km
+  Turbine 7: x=2.1833 km, y=1.0641 km
+  Turbine 8: x=2.7634 km, y=1.5934 km
+  Turbine 9: x=2.5009 km, y=1.5330 km
+  Turbine 10: x=2.4958 km, y=0.9941 km
+  Turbine 11: x=1.1622 km, y=1.5488 km
+  Turbine 12: x=1.3890 km, y=1.7449 km
+
+=== Start position (random seed) ===
+  Turbine 0: x=2.3011 km, y=1.6746 km
+  Turbine 1: x=1.3643 km, y=0.3592 km
+  Turbine 2: x=2.1101 km, y=1.4733 km
+  Turbine 3: x=3.5342 km, y=1.5449 km
+  Turbine 4: x=2.4690 km, y=1.1709 km
+  Turbine 5: x=3.5305 km, y=1.4707 km
+  Turbine 6: x=1.8639 km, y=1.7636 km
+  Turbine 7: x=3.0750 km, y=0.3385 km
+  Turbine 8: x=0.7301 km, y=1.1316 km
+  Turbine 9: x=0.9771 km, y=1.1232 km
+  Turbine 10: x=1.6859 km, y=0.6854 km
+  Turbine 11: x=0.8632 km, y=1.2757 km
+  Turbine 12: x=0.8516 km, y=0.1958 km
