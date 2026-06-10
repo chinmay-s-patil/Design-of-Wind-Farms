@@ -5,7 +5,7 @@
 # Note: Pre-cut-in (ws < 4 m/s) and post-cut-out (ws > 25 m/s) zeroed.
 # Note: Hub height and TSR from assignment Table 3.
 
-turbine_type: 'bar_bau_lsp_3p25MW'
+turbine_type: 'BAR_BAU_LSP_3.25MW'
 
 hub_height: 120.0
 rotor_diameter: 166.0
